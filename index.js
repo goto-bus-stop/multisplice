@@ -22,10 +22,13 @@ module.exports = function multisplice (str) {
     assert.equal(typeof start, 'number', 'multisplice.slice: start must be a number')
     if (end != null) assert.equal(typeof end, 'number', 'multisplice.slice: end must be a number')
 
+    splices.sort(byStart)
+
     var result = ''
     var last = start
     for (var i = 0; i < splices.length; i++) {
       var sp = splices[i]
+      if (sp.start < last) continue // ignore splices that are entirely contained in an earlier spliced range
       if (end != null) {
         if (sp.start >= end) return result + str.slice(last, end)
       }
@@ -38,4 +41,8 @@ module.exports = function multisplice (str) {
   function toString () {
     return slice(0)
   }
+}
+
+function byStart (a, b) {
+  return a.start - b.start
 }
