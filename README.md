@@ -21,17 +21,44 @@ npm install multisplice
 
 ## Usage
 
-```js
-var multisplice = require('multisplice')
+Renaming identifiers in Javascript code:
 
-var s = multisplice('function a () {}')
-s.splice(node) // false
-s.splice(node) // true
-s.splice(node, 'abc') // true
-s.splice(node, 'xyz') // false
+```js
+var multisplice = require('./')
+var dedent = require('dedent')
+var astw = require('astw')
+
+var src = dedent`
+  function beep (boop) {
+    boop *= baz
+    console.log(boop)
+  }
+  var baz = 10
+  beep(17)
+`
+
+var splicer = multisplice(src)
+var renames = {}
+var nextName = 'a'.charCodeAt()
+astw(src)(function (node) {
+  if (node.type === 'Identifier') {
+    if (!renames[node.name]) renames[node.name] = String.fromCharCode(nextName++)
+
+    splicer.splice(node.start, node.end, renames[node.name])
+  }
+})
+
+console.log(splicer.toString())
 ```
 
-Also see the [tests](./test.js) for more examples.
+```
+function a (b) {
+  b *= c
+  d.e(b)
+}
+var c = 10
+a(17)
+```
 
 ## API
 
