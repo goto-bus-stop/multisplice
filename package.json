@@ -25,6 +25,6 @@
     "url": "https://github.com/goto-bus-stop/multisplice.git"
   },
   "scripts": {
-    "test": "standard && tape test.js"
+    "test": "standard && node test.js"
   }
 }

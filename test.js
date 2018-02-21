@@ -1,14 +1,20 @@
+var test = require('tape')
 var Splicer = require('./')
 
-var str = Splicer('a b c d e')
-  .splice(2, 3, 'beep')
-  .splice(6, 7, 'boop')
-console.log(str.toString())
-console.log(str.slice(2, 8))
-console.log('a b c d e'.slice(2, 8))
+test('splice multiple things using original indices', function (t) {
+  var str = Splicer('a b c d e')
+    .splice(2, 3, 'beep')
+    .splice(6, 7, 'boop')
 
-var str = Splicer('a b c d e')
-  .splice(4, 5, 'beep')
+  t.equal(str.toString(), 'a beep c boop e')
+  t.end()
+})
 
-console.log(str.slice(2, 7))
-console.log(str.splice(2, 7, 'boop').toString())
+test('slice part of a spliced string using original indices', function (t) {
+  var str = Splicer('a b c d e')
+    .splice(2, 3, 'beep')
+    .splice(6, 7, 'boop')
+
+  t.equal(str.slice(2, 5), 'beep c')
+  t.end()
+})
