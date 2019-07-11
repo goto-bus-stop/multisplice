@@ -1,26 +1,26 @@
 var assert = require('assert')
 
 module.exports = function multisplice (str) {
-  assert.equal(typeof str, 'string', 'multisplice: str must be a string')
+  assert.strictEqual(typeof str, 'string', 'multisplice: str must be a string')
 
   var splices = []
   var self = { splice: splice, slice: slice, toString: toString }
   return self
 
   function splice (start, end, value) {
-    assert.equal(typeof start, 'number', 'multisplice.splice: start must be a number')
-    assert.equal(typeof end, 'number', 'multisplice.splice: end must be a number')
-    assert.equal(typeof value, 'string', 'multisplice.splice: replacement value must be a string')
+    assert.strictEqual(typeof start, 'number', 'multisplice.splice: start must be a number')
+    assert.strictEqual(typeof end, 'number', 'multisplice.splice: end must be a number')
+    assert.strictEqual(typeof value, 'string', 'multisplice.splice: replacement value must be a string')
     assert(start >= 0, 'multisplice.splice: start must be at least 0')
-    assert(end >= start, 'multisplice.splice: end must be equal to or greater than start')
+    assert(end >= start, 'multisplice.splice: end must be strictEqual to or greater than start')
 
     splices.push({ start: start, end: end, value: value })
     return self
   }
 
   function slice (start, end) {
-    assert.equal(typeof start, 'number', 'multisplice.slice: start must be a number')
-    if (end != null) assert.equal(typeof end, 'number', 'multisplice.slice: end must be a number')
+    assert.strictEqual(typeof start, 'number', 'multisplice.slice: start must be a number')
+    if (end != null) assert.strictEqual(typeof end, 'number', 'multisplice.slice: end must be a number')
 
     splices.sort(byStart)
 
