@@ -9,8 +9,8 @@
   "devDependencies": {
     "astw": "^2.2.0",
     "dedent": "^0.7.0",
-    "standard": "^10.0.3",
-    "tape": "^4.8.0"
+    "standard": "^13.0.0",
+    "tape": "^4.11.0"
   },
   "homepage": "https://github.com/goto-bus-stop/multisplice",
   "keywords": [
